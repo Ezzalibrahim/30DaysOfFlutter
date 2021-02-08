@@ -6,19 +6,14 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Startup Name Generator',
-      theme: ThemeData(
-          primaryColor: Colors.teal
-      ),
-
+      theme: ThemeData(primaryColor: Colors.teal),
       home: RandomWords(),
     );
   }
-
 }
 
 class RandomWords extends StatefulWidget {
@@ -27,28 +22,27 @@ class RandomWords extends StatefulWidget {
 }
 
 class _RandomWordsState extends State<RandomWords> {
-  final _saved = Set<WordPair>();     // NEW
-  final List<WordPair> _suggestions = <WordPair>[];            // NEW
+  final _saved = Set<WordPair>(); // NEW
+  final List<WordPair> _suggestions = <WordPair>[]; // NEW
   final TextStyle _biggerFont = const TextStyle(fontSize: 18);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold (
+    return Scaffold(
       appBar: AppBar(
         title: Text('All Fake Tasks'),
-        actions: [
-          IconButton(icon: Icon(Icons.list), onPressed: _pushSaved)
-        ],
+        actions: [IconButton(icon: Icon(Icons.list), onPressed: _pushSaved)],
       ),
       body: _buildSuggestions(),
     );
   }
-  void _pushSaved(){
+
+  void _pushSaved() {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (BuildContext context) {
           final tiles = _saved.map(
-                (WordPair pair) {
+            (WordPair pair) {
               return ListTile(
                 title: Text(
                   pair.asPascalCase,
@@ -85,11 +79,11 @@ class _RandomWordsState extends State<RandomWords> {
           if (index >= _suggestions.length) {
             _suggestions.addAll(generateWordPairs().take(10));
           }
-          
+
           return _buildRow(_suggestions[index]);
-        }
-    );
+        });
   }
+
   Widget _buildRow(WordPair pair) {
     final alreadySaved = _saved.contains(pair);
     return ListTile(
@@ -113,5 +107,3 @@ class _RandomWordsState extends State<RandomWords> {
     );
   }
 }
-
-
